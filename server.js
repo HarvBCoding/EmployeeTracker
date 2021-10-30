@@ -12,14 +12,11 @@ app.use(express.json());
 
 // require functions from folder
 const prompts = require('./lib/index')
-const Department = require('./lib/Department');
-const Employee = require('./lib/Employee');
-const Role = require('./lib/Role');
+
+const init = () => {
+    prompts.startPrompt();
+}
+
+init();
 
 
-db.connect(err => {
-    if (err) throw err;
-    console.log('Database connected');
-});
-
-startPrompt()
