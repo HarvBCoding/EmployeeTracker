@@ -19,52 +19,52 @@ app.use(express.json());
 
 
 const newRolePrompt = () => {
-    let departments = db.query(`SELECT name FROM department`, (err, rows) => {
+    db.query(`SELECT name FROM department`, (err, rows) => {
         if (err) {
             console.log(err)
         };
         let list = rows.map(obj => {
             return obj.name
         })
-        return list;
+        return inquirer.prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'What is the title of the role you would like to add? (Required)',
+                validate: roleInput => {
+                    if (roleInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter a title for the new role!');
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'What is the salary amount for the new role?',
+                validate: salaryInput => {
+                    if (salaryInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter a salary amount!')
+                        return false;
+                    }
+                }
+            },
+            {
+                type: 'list',
+                name: 'departmentId',
+                message: 'What department is the new role associated with?',
+                choices: list
+            }
+        ]).then( answer => {
+            console.log(answer)
+        })
     })
 
-    return inquirer.prompt([
-        {
-            type: 'input',
-            name: 'title',
-            message: 'What is the title of the role you would like to add? (Required)',
-            validate: roleInput => {
-                if (roleInput) {
-                    return true;
-                } else {
-                    console.log('Please enter a title for the new role!');
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'input',
-            name: 'salary',
-            message: 'What is the salary amount for the new role?',
-            validate: salaryInput => {
-                if (salaryInput) {
-                    return true;
-                } else {
-                    console.log('Please enter a salary amount!')
-                    return false;
-                }
-            }
-        },
-        {
-            type: 'list',
-            name: 'departmentId',
-            message: 'What department is the new role associated with?',
-            choices: departments
-        }
-    ]).then( answer => {
-        console.log(answer)
-    })
+    
 }
 const newDeptPrompt = () => {
     return inquirer.prompt(
