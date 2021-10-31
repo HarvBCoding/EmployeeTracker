@@ -16,13 +16,16 @@ VALUES
     ('Legal Team Lead', 250000, 1),
     ('Lawyer', 190000, 1);
 
+INSERT INTO manager (first_name, last_name, roleId)
+VALUES
+    ('Sophia', 'Livingston', 1),
+    ('Noah', 'Dawson', 3),
+    ('Jaxon', 'Harvey', 6),
+    ('Emma', 'Nelson', 7);
+
 INSERT INTO employee (first_name, last_name, roleId, managerId)
 VALUES
-    ('Sophia', 'Livingston', 1, NULL),
     ('Liam', 'Richards', 2, 1),
-    ('Noah', 'Dawson', 3, NULL),
-    ('Olivia', 'Hanson', 4, 3),
-    ('Jaxon', 'Harvey', 6, NULL),
-    ('Riley', 'Matthews', 5, 5),
-    ('Emma', 'Nelson', 7, NULL),
-    ('Elijah', 'Greyson', 8, 7);
+    ('Olivia', 'Hanson', 4, 2),
+    ('Riley', 'Matthews', 5, 3),
+    ('Elijah', 'Greyson', 8, 4);
