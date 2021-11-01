@@ -19,12 +19,12 @@ app.use(express.json());
 
 
 const newRolePrompt = () => {
-    db.query(`SELECT name FROM department`, (err, rows) => {
+    db.query(`SELECT id, name FROM department`, (err, rows) => {
         if (err) {
             console.log(err)
         };
         let list = rows.map(obj => {
-            return obj.name
+            return `${obj.id}) ${obj.name}`
         })
         return inquirer.prompt([
             {
@@ -60,12 +60,17 @@ const newRolePrompt = () => {
                 choices: list
             }
         ]).then( answer => {
-            console.log(answer)
-        })
+            
+            // add a case statement here
+            let deptArr = answer.departmentId.split(")")
+            let deptId = deptArr[0]
+            let role = [answer.title, answer.salary, deptId]
+            Role.addRole(role);
+            startPrompt();
+        }).catch(err => console.log(err))
     })
-
-    
 }
+
 const newDeptPrompt = () => {
     return inquirer.prompt(
         {
